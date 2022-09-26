@@ -13,9 +13,9 @@ Language: Python 3
 
 Worker Type: G 1x
 
-Spark UI logs path: s3://<key>/logs/
+Spark UI logs path: s3://key/logs/
   
-Temporary path: s3://<key>/tmp/
+Temporary path: s3://key/tmp/
   
 Job parameters: 
   
