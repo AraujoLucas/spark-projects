@@ -1,5 +1,5 @@
 # spark-projects
-create repo for storage my scritps pyspark
+Repo for storage my scritps pyspark
 
 # Glue Job load in data mesh example
 
