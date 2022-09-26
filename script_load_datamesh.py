@@ -22,8 +22,6 @@ def load_files(glueContext,spark, glue_params: dict):
     data_target = glue_params['data_target']
     now = datetime.now()
     date_process = "%s%02d%s" % (now.year, now.month,now.day)
-    path_output_cc = '%s/tb_sales_cc/parquet/dt=%s' % (data_target,date_process)
-    path_output_cd = '%s/tb_sales_cd_spec/parquet/dt=%s' % (data_target,date_process)
     
     print(f'{datetime.now()} --- Account {account}')
     print(f'{datetime.now()} --- Database target for load {db_target}')
