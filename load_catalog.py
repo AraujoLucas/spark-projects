@@ -1,29 +1,26 @@
 from awsglue.dynamicframe import DynamicFrame
 from awsglue.context import GlueContext
 
-def create_dynamic_frame(database, table_name):
-    glueContext = GlueContext(SparkContext.getOrCreate())
-    glueContext.getConf().set("mapred.max.split.size", "5368709120") # 5 GB
-    return glueContext.create_dynamic_frame.from_catalog(
-        database=database,
-        table_name=table_name
-    )
+glueContext = GlueContext(SparkContext.getOrCreate())
 
-def write_dynamic_frame(frame, path):
-    glueContext = GlueContext(SparkContext.getOrCreate())
-    glueContext.write_dynamic_frame.from_options(
-        frame=frame,
-        connection_type="s3",
-        connection_options={
-            "path": path
-        },
-        format="parquet"
-    )
+# Configurando o tamanho máximo de cada split em bytes
+glueContext.getConf().set("mapred.max.split.size", "5368709120") # 5 GB
 
-# Usage
-datasource = create_dynamic_frame("mydatabase", "mytable")
+# Criando um DynamicFrame a partir de uma fonte de dados
+datasource = glueContext.create_dynamic_frame.from_catalog(
+    database="mydatabase",
+    table_name="mytable"
+)
 
 # Processando o DynamicFrame como necessário
 # ...
 
-write_dynamic_frame(datasource, "s3://mybucket/output")
+# Salvando o DynamicFrame em uma tabela de destino
+glueContext.write_dynamic_frame.from_options(
+    frame=datasource,
+    connection_type="s3",
+    connection_options={
+        "path": "s3://mybucket/output"
+    },
+    format="parquet"
+)
